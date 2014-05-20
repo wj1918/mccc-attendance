@@ -1,0 +1,47 @@
+<?!= include('Stylesheet'); 
+   var current= getAttendance(grade).current;
+   ?>
+<span id="loading_sign"> Loading... </span>&nbsp;
+<div id="attendence-box" class="simple-box">
+   <h1><?=grade ?> Attendence - Week Of <?=current.date.format("yyyy/MM/dd")?> <?=current.testing_flag?></h1>
+   <input type="hidden" id="grade" value="<?=grade?>" >
+   <input type="hidden" id="column" value="<?=current.column?>" >
+   <input type="hidden" id="names_total" value="<?=current.names.length?>" >
+   <div id="names-box">
+      <table>
+         <?
+            for (var i = 0; i < current.names.length; i++) {
+            var name=current.names[i];
+            ?>
+         <tr>
+            <td><span class=previous_star> <?= name.previous? "*": "" ?> </span></td>
+            <td> <?=name.name?> </td>
+            <td> <input type="checkbox" class="check-list" <?=name.present ? "checked": ""?> ></td>
+         </tr>
+         <? } ?>
+      </table>
+   </div>
+   <div class="total-box">
+      <div class="total-section">
+         <span class="total-section-title">Last Week </span>Total:<span style="font-weight:bold"> <?=current.previous_total ?></span>.&nbsp;
+         <? if(current.allow_copy){ ?>
+         <input type="submit" name="Copy" id="copy_button" value="Copy" />
+         <? } ?> 
+         <br>
+         Click Copy button to make current attendence same as last week. * indicate last week attendence
+      </div>
+      <br>
+      <div class="total-section">
+         <span class="total-section-title"> Current Week </span> Total: &nbsp;<span style="font-weight:bold" id="current_total"><?=current.current_total ?></span>. &nbsp;
+         <input type="submit" name="Copy" id="update_button" value="Update" />
+         <br>
+         Click the names to check or uncheck attendence and click Update button to update the system. 
+         after update, the current total will change, make sure the total is correct.
+      </div>
+      <br>
+      <p class="clear"></p>
+   </div>
+   <p class="clear"></p>
+</div>
+<?!= include('jQuery'); ?>
+

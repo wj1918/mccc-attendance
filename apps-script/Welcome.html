@@ -1,0 +1,16 @@
+<? var url= ScriptApp.getService().getUrl() ?>
+
+<div style="text-align:left"><font color="#000000" size="7">Sunday School Attendance</font></div>
+
+<div>
+   <ul>
+
+<? var grades=["Nurse","PK","K","G1","G2","G3","G4","G5"];
+for (i in grades)
+{?>
+   <li><a href="<?=url?>?grade=<?=grades[i]?>"><font size="7"> <?=grades[i]?> </font></a></li>
+
+<? } ?>
+    </ul>
+</div>
+

@@ -1,0 +1,91 @@
+<!-- Load the jQuery and jQuery UI libraries. -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<script>
+
+$(function() {
+
+      
+     $("#copy_button").click(function(){
+     
+       showWait();
+       var grade=$("#grade").val();
+       var column=$("#column").val();
+       var len=$("#names_total").val();
+         
+       google.script.run.withSuccessHandler(function() {
+       
+         google.script.run.withSuccessHandler(function(values){
+           var checkboxs=$(".check-list");
+           var current_total=0;
+           for(var i=0;i<checkboxs.length;i++){
+              checkboxs[i].checked=values[i];
+              current_total+= values[i]? 1: 0;
+           }
+           $("#current_total").text(current_total);
+           hideWait();
+
+         }).withFailureHandler(showError)
+         .getGradeTotal(grade, column, len);
+       
+       }).withFailureHandler(showError)
+       .copyAttendance(grade, column, len);
+     
+     });
+     $("#update_button").click(function(){
+     
+       showWait();
+       var grade=$("#grade").val();
+       var column=$("#column").val();
+       var len=$("#names_total").val();
+       
+       var check_list=[];
+       $(".check-list").each(function(){check_list.push(this.checked) });
+         
+       google.script.run.withSuccessHandler(function() {
+       
+         google.script.run.withSuccessHandler(function(values){
+           var checkboxs=$(".check-list");
+           var current_total=0;
+           for(var i=0;i<checkboxs.length;i++){
+              checkboxs[i].checked=values[i];
+              current_total+= values[i]? 1: 0;
+           }
+           $("#current_total").text(current_total);
+           hideWait();
+
+         }).withFailureHandler(showError)
+         .getGradeTotal(grade, column, len);
+       
+       }).withFailureHandler(showError)
+       .updateAttendance(grade, column, len, check_list);
+       
+     });
+     $("#attendence-box").show();
+     $("#loading_sign").hide();
+     
+  });
+  
+  function showError(error) {
+    hideWait();
+    console.log(error);
+    window.alert('An error has occurred, please try again.');
+  }
+  
+  function showWait() {
+    $("#loading_sign").show();
+    $("input").attr("disabled", true);
+    $("input").css("cursor", "progress");
+    $("body").css("cursor", "progress");
+  }
+  
+  function hideWait() {
+    $("input").attr("disabled", false);
+    $("input").css("cursor", "default");
+    $("body").css("cursor", "default");
+    $("#loading_sign").hide();
+  }
+  
+  
+</script>
+
