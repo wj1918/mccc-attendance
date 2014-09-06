@@ -83,15 +83,15 @@ $names = $current['names'];
             </table>
         </div>
         <div class="total-box">
+            <? if ($current['allow_copy']) { ?>
             <div class="total-section">
                 <span class="total-section-title">Last Week <? echo $previous_date->format("m/d") ?></span>Total: &nbsp;
                 <span style="font-weight:bold"> <? echo $current['previous_total'] ?></span>.&nbsp;
-                <? if ($current['allow_copy']) { ?>
                     <input type="submit" name="Copy" id="copy_button" value="Copy" />
-                <? } ?> 
                 <br>
                 Make current attendance same as last week. * indicate last week attendance
             </div>
+            <? } ?> 
             <br>
             <div class="total-section">
                 <span class="total-section-title"> Current Week <? echo $date->format("m/d") ?></span> Total: &nbsp;
